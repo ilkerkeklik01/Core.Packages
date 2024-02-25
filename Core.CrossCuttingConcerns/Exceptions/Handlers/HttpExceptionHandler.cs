@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ValidationProblemDetails = Core.CrossCuttingConcerns.Exceptions.HttpProblemDetails.ValidationProblemDetails;
 
 namespace Core.CrossCuttingConcerns.Exceptions.Handlers;
 
@@ -19,7 +20,6 @@ public class HttpExceptionHandler : ExceptionHandler
         get => _response ?? throw new ArgumentNullException(nameof(_response));
         set => _response = value;
     }
-
     protected override Task HandleException(BusinessException businessException)
     {
         Response.StatusCode = StatusCodes.Status400BadRequest;
@@ -34,6 +34,10 @@ public class HttpExceptionHandler : ExceptionHandler
         return Response.WriteAsync(details);
     }
 
-
-
+    protected override Task HandleException(ValidationException validationException)
+    {
+        Response.StatusCode = StatusCodes.Status400BadRequest;
+        string details = new ValidationProblemDetails(validationException.Errors).AsJson();
+        return Response.WriteAsync(details);
+    }
 }

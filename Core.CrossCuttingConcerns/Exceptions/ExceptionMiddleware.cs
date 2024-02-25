@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Core.CrossCuttingConcerns.Exceptions;
@@ -24,17 +25,21 @@ public class ExceptionMiddleware
         try
         {
             await _next(context);
-        }catch (Exception exception)
+        }
+        catch (Exception exception)
         {
+            
             await HandleExceptionAsync(context.Response, exception);
         }
 
     }
 
-    private Task HandleExceptionAsync(HttpResponse response,Exception exception)
+    
+
+    private Task HandleExceptionAsync(HttpResponse response, Exception exception)
     {
-        response.ContentType= "application/json";
-        _httpExceptionHandler.Response= response;
+        response.ContentType = "application/json";
+        _httpExceptionHandler.Response = response;
         return _httpExceptionHandler.HandleExceptionAsync(exception);
     }
 }
