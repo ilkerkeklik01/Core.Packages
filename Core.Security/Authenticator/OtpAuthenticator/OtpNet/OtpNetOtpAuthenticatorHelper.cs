@@ -1,11 +1,12 @@
-﻿using OtpNet;
+﻿using Core.Security.Authenticator.OtpAuthenticator;
+using OtpNet;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Security.OtpAuthenticator.OtpNet;
+namespace Core.Security.Authenticator.OtpAuthenticator.OtpNet;
 
 public class OtpNetOtpAuthenticatorHelper : IOtpAuthenticatorHelper
 {

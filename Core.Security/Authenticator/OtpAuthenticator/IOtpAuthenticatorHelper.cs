@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Security.OtpAuthenticator;
+namespace Core.Security.Authenticator.OtpAuthenticator;
 
 public interface IOtpAuthenticatorHelper
 {
 
     public Task<byte[]> GenerateSecretKey();
     public Task<string> ConvertSecretKeyToString(byte[] secretKey);
-    public Task<bool> VerifyCode(byte[] secretKey,string code);  
+    public Task<bool> VerifyCode(byte[] secretKey, string code);
 
 }

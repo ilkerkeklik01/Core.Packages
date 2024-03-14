@@ -1,7 +1,7 @@
 ﻿using Core.Security.Encryption;
 using Core.Security.Entities;
 using Core.Security.Extensions;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -16,18 +16,13 @@ namespace Core.Security.JWT;
 
 public class JwtHelper : ITokenHelper
 {
-    public IConfiguration Configuration { get; }
     private readonly TokenOptions _tokenOptions;
     private DateTime _accessTokenExpiration;
 
 
-    public JwtHelper(IConfiguration configuration)
+    public JwtHelper(IOptions<TokenOptions> tokenOptions)
     {
-        Configuration = configuration;
-        const string configurationSection = "TokenOptions";
-        _tokenOptions =
-            Configuration.GetSection(configurationSection).Get<TokenOptions>()
-            ?? throw new NullReferenceException($"\"{configurationSection}\" section cannot found in configuration.");
+        _tokenOptions = tokenOptions.Value;
     }
 
     public RefreshToken CreateRefreshToken(User user, string ipAddress)

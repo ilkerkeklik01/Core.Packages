@@ -26,9 +26,11 @@ public class AuthorizationBehavior<TRequest, TResponse> : IPipelineBehavior<TReq
     {
         List<string>? userRoleClaims = _httpContextAccessor.HttpContext.User.ClaimRoles();
 
+        //Authentication (Kimlik Doğrulama):
         if (userRoleClaims == null)
             throw new AuthorizationException("You are not authenticated.");
 
+        //Authorization (Yetkilendirme):
         bool isNotMatchedAUserRoleClaimWithRequestRoles = userRoleClaims
             .FirstOrDefault(
                 userRoleClaim => userRoleClaim == GeneralOperationClaims.Admin || request.Roles.Any(role => role == userRoleClaim)
