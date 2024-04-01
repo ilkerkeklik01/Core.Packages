@@ -55,7 +55,7 @@ public class EfRepositoryBase<TEntity, TEntityId, TContext>
         return await queryable.AnyAsync(cancellationToken);
     }
 
-    public async Task<TEntity> DeleteAsync(TEntity entity, bool permanent = false)
+    public async Task<TEntity> DeleteAsync(TEntity entity, bool permanent = true)
     {
         await SetEntityAsDeletedAsync(entity, permanent);
         await Context.SaveChangesAsync();
