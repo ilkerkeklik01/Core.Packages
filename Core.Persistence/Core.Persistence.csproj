@@ -4,6 +4,9 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <PackageId>CleanArchitecture.$(AssemblyName)</PackageId>
+    <Title>CleanArchitecture.Core.Persistence</Title>
+    <Version>1.0.3</Version>
   </PropertyGroup>
 
   <ItemGroup>

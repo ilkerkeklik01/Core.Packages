@@ -28,7 +28,10 @@ public class EfRepositoryBase<TEntity, TEntityId, TContext>
 
     public async Task<TEntity> AddAsync(TEntity entity)
     {
-        entity.CreatedDate = DateTime.UtcNow;
+        if (entity.CreatedDate == null || entity.CreatedDate == default(DateTime))
+        {
+            entity.CreatedDate = DateTime.UtcNow;
+        }
         await Context.AddAsync(entity);
         await Context.SaveChangesAsync();
         return entity;
@@ -37,7 +40,13 @@ public class EfRepositoryBase<TEntity, TEntityId, TContext>
     public async Task<ICollection<TEntity>> AddRangeAsync(ICollection<TEntity> entities)
     {
         foreach (TEntity entity in entities)
-            entity.CreatedDate = DateTime.UtcNow;
+        {
+            if (entity.CreatedDate == null || entity.CreatedDate == default(DateTime))
+            {
+                entity.CreatedDate = DateTime.UtcNow;
+            }
+        }
+            
         await Context.AddRangeAsync(entities);
         await Context.SaveChangesAsync();
         return entities;
@@ -115,7 +124,10 @@ public class EfRepositoryBase<TEntity, TEntityId, TContext>
 
     public async Task<TEntity> UpdateAsync(TEntity entity)
     {
-        entity.UpdatedDate = DateTime.UtcNow;
+        if (entity.UpdatedDate == null || entity.UpdatedDate == default(DateTime))
+        {
+            entity.UpdatedDate = DateTime.UtcNow;
+        }
         Context.Update(entity);
         await Context.SaveChangesAsync();
         return entity;
@@ -124,7 +136,13 @@ public class EfRepositoryBase<TEntity, TEntityId, TContext>
     public async Task<ICollection<TEntity>> UpdateRangeAsync(ICollection<TEntity> entities)
     {
         foreach (TEntity entity in entities)
-            entity.UpdatedDate = DateTime.UtcNow;
+        {
+            if (entity.UpdatedDate == null || entity.UpdatedDate == default(DateTime))
+            {
+                entity.UpdatedDate = DateTime.UtcNow;
+            }
+        }
+            
         Context.UpdateRange(entities);
         await Context.SaveChangesAsync();
         return entities;
@@ -166,7 +184,10 @@ public class EfRepositoryBase<TEntity, TEntityId, TContext>
     {
         if (entity.DeletedDate.HasValue)
             return;
-        entity.DeletedDate = DateTime.UtcNow;
+        if (entity.DeletedDate == null || entity.DeletedDate == default(DateTime))
+        {
+            entity.DeletedDate = DateTime.UtcNow;
+        }
 
         var navigations = Context
             .Entry(entity)
