@@ -40,7 +40,7 @@ public class ExceptionMiddleware
 
     }
 
-    private async Task LogException(HttpContext context, Exception exception)
+    private Task LogException(HttpContext context, Exception exception)
     {
         List<LogParameter> logParameters = new()
         {
@@ -57,6 +57,8 @@ public class ExceptionMiddleware
 
 
         _loggerService.Error(JsonSerializer.Serialize(logDetail));
+        
+        return Task.CompletedTask;
     }
 
     private Task HandleExceptionAsync(HttpResponse response, Exception exception)

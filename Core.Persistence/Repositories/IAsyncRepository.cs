@@ -57,8 +57,8 @@ public interface IAsyncRepository<TEntity, TEntityId> : IQuery<TEntity>
 
     Task<ICollection<TEntity>> UpdateRangeAsync(ICollection<TEntity> entities);
 
-    Task<TEntity> DeleteAsync(TEntity entity, bool permanent = false);
+    Task<TEntity> DeleteAsync(TEntity entity, bool permanent = true);
 
-    Task<ICollection<TEntity>> DeleteRangeAsync(ICollection<TEntity> entities, bool permanent = false);
+    Task<ICollection<TEntity>> DeleteRangeAsync(ICollection<TEntity> entities, bool permanent = true);
 
 }
